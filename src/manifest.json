@@ -1,0 +1,19 @@
+{
+  "manifest_version": 3,
+  "name": "フリマアシストぷらす",
+  "version": "1.0.0",
+  "description": "フリマアシストをさらにやりやすくするための拡張機能",
+  "permissions": ["activeTab"],
+  "action": {
+    "default_popup": "popup.html"
+  },
+  "content_scripts": [
+    {
+      "matches": ["https://jp.mercari.com/mypage/listings"],
+      "js": ["content.js"]
+    }
+  ],
+  "background": {
+    "service_worker": "worker.js"
+  }
+}
