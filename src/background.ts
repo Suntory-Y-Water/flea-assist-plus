@@ -32,7 +32,10 @@ const sendMessageToContentScript = (selector: string) => {
 chrome.tabs.onRemoved.addListener((tabId, removeInfo) => {
   if (++currentSelectorIndex < selectors.length) {
     console.log(`${currentSelectorIndex}番目の商品を再出品します。`);
-    sendMessageToContentScript(selectors[currentSelectorIndex]);
+    // 1秒待ってから再出品処理を行う
+    setTimeout(() => {
+      sendMessageToContentScript(selectors[currentSelectorIndex]);
+    }, 1000);
   } else {
     console.log('全ての商品を再出品しました。');
   }
