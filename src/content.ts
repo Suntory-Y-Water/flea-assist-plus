@@ -1,4 +1,4 @@
-import { ProductData } from './types';
+import { MessageActionsId, MessageActionsIdWithSingleSelector, ProductData } from './types';
 
 const waitForElementToAppear = async (
   selector: string,
@@ -19,30 +19,31 @@ const waitForElementToAppear = async (
   return null;
 };
 
-const getProductData = (element: Element): ProductData => {
+const getProductData = (element: Element, count: number): ProductData => {
   const nameElement = element.querySelector('.content__97a42da1 > span');
   const imageElement = element.querySelector(
     '.merItemThumbnail.medium__a6f874a2.thumbnail__97a42da1 > figure > div.imageContainer__f8ddf3a2 > picture > img',
   );
-  const editLinkElement = element.querySelector('#edit-link');
+  const cloneAndDeleteItemElement = element.querySelector('#clone-and-delete-item');
 
   return {
     name: nameElement ? nameElement.textContent : null,
     imageUrl: imageElement ? imageElement.getAttribute('src') : null,
-    hasEditLink: !!editLinkElement,
+    cloneAndDeleteItemSelector: cloneAndDeleteItemElement
+      ? `#currentListing > div.merList.border__17a1e07b.separator__17a1e07b > div:nth-child(${count}) > div.content__884ec505 > a > div > div > #clone-and-delete-item`
+      : null,
   };
 };
 
-chrome.runtime.onMessage.addListener(async (request, sender, sendResponse) => {
+chrome.runtime.onMessage.addListener(async (request: MessageActionsId, sender, sendResponse) => {
   if (request.action == 'fetchSelectors') {
     let details = [];
-
-    for (let count = 1; count <= 5; count++) {
+    for (let count = 1; count <= 50; count++) {
       const selector = `#currentListing > div.merList.border__17a1e07b.separator__17a1e07b > div:nth-child(${count}) > div.content__884ec505 > a > div > div`;
       try {
         const element = await waitForElementToAppear(selector, 1000, 5000);
         if (element) {
-          const productData = getProductData(element);
+          const productData = getProductData(element, count);
           details.push(productData);
         } else {
           console.log(`Product ${count} not found.`);
@@ -52,21 +53,25 @@ chrome.runtime.onMessage.addListener(async (request, sender, sendResponse) => {
       }
     }
 
-    console.log('Product listing completed.');
+    console.log('全ての商品を取得しました。');
     sendResponse({ data: details });
   }
   return true;
 });
 
-chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
-  if (request.action === 'clickEditLink') {
-    const editLink = document.querySelector<HTMLElement>(
-      '#currentListing > div.merList.border__17a1e07b.separator__17a1e07b > div:nth-child(1) > div.content__884ec505 > a > div > div > #edit-link',
-    );
-    if (!editLink) {
-      throw new Error('Edit link not found.');
+// 受信したメッセージのセレクター要素をクリックする。
+chrome.runtime.onMessage.addListener(
+  (request: MessageActionsIdWithSingleSelector, sender, sendResponse) => {
+    if (request.action !== 'cloneAndDeleteItem') {
+      console.error(`メッセージID : ${request.action}`);
+      throw new Error('異なるメッセージを受信しました。');
     }
-    editLink.click();
+
+    const itemSelector = document.querySelector<HTMLElement>(request.selector);
+    if (!itemSelector) {
+      throw new Error('要素が見つかりませんでした。');
+    }
+    itemSelector.click();
     sendResponse();
-  }
-});
+  },
+);
