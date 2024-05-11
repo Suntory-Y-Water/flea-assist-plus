@@ -1,19 +1,26 @@
-# flea-assist-plus
+# フリマアシストぷらす
 
-フリマアシストを使って再出品の自動化機能を強化する拡張機能
+フリマアシストの自動再出品機能を使って、出品作業を自動化する拡張機能
 
-# selector
+> [!WARNING]
+> この拡張機能は 2024/05/11 現在、Google Chrome ストアに公開していません。
+>
+> ご自身で本リポジトリをダウンロードして、フォルダを解凍していただく必要があります。
 
-```text
-大元
-#currentListing > div.merList.border__17a1e07b.separator__17a1e07b > div:nth-child(1) > div.content__884ec505 > a > div > div
+# インストール手順
 
-商品名
-#currentListing > div.merList.border__17a1e07b.separator__17a1e07b > div:nth-child(1) > div.content__884ec505 > a > div > div > div.content__97a42da1 > span
+- 本リポジトリをダウンロードする
+- こちらのサイト`https://exemate.co.jp/archives/7594`に記載されている手順に従って`パッケージ化されていない拡張機能を読み込む`で、ダウンロードした本リポジトリの`dist`フォルダを選択する
 
-画像
-#currentListing > div.merList.border__17a1e07b.separator__17a1e07b > div:nth-child(1) > div.content__884ec505 > a > div > div > div.merItemThumbnail.medium__a6f874a2.thumbnail__97a42da1 > figure > div.imageContainer__f8ddf3a2 > picture > img
+# 使い方
 
-編集ボタン
-#currentListing > div.merList.border__17a1e07b.separator__17a1e07b > div:nth-child(1) > div.content__884ec505 > a > div > div > #edit-link
-```
+1. メルカリで[出品した商品](https://jp.mercari.com/mypage/listings)を開く
+2. 画面右上の拡張機能から「フリマアシストぷらす」を選択する
+   1. 「フリマアシストぷらす」を選択するとポップアップが表示される。
+3. 再出品したい商品をチェックボックスまたは商品名を選択する
+4. ポップアップ上部の「再出品する」ボタンを選択する(選択した商品が自動で再出品されます)
+
+# 注意事項
+
+- フリマアシストで再出削ボタンを表示していること
+- 再出削ボタン選択時の実行前確認を「表示しない」に設定していること

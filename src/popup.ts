@@ -16,6 +16,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
         const container = document.querySelector('.listings-container');
         if (container && response && response.data) {
+          let inputCount = 1;
           for (const product of response.data) {
             const listingItem = document.createElement('div');
             listingItem.classList.add('listing-item');
@@ -26,13 +27,15 @@ document.addEventListener('DOMContentLoaded', () => {
             // チェックボックスを作成
             const checkbox = document.createElement('input');
             checkbox.type = 'checkbox';
+            checkbox.id = `item-checkbox-${inputCount}`;
             checkbox.classList.add('item-checkbox');
 
             const productDetails = document.createElement('div');
             productDetails.classList.add('product-details');
 
             // 商品名
-            const productName = document.createElement('h3');
+            const productName = document.createElement('label');
+            productName.htmlFor = `item-checkbox-${inputCount}`;
             productName.textContent = `${product.name ?? ' '}`;
 
             // 商品画像
@@ -50,6 +53,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
             // コンテナにリストアイテムを追加
             container.appendChild(listingItem);
+            inputCount++;
           }
         } else {
           console.error('No data received or container not found.');
@@ -79,19 +83,30 @@ document.addEventListener('DOMContentLoaded', () => {
           .filter((item): item is string => item !== undefined);
 
         if (checkedItems.length === 0) {
-          console.log('再出品する商品を選択してください');
+          alert('再出品する商品を選択してください');
           return;
         }
-        console.log(checkedItems);
         chrome.runtime.sendMessage<MessageActionsIdWithSelectors>({
           action: 'startListings',
           selectors: checkedItems,
         });
-
-        console.log('再出品処理を開始しました。');
       } else {
         console.error('No active tab with a valid ID found.');
       }
+    });
+  });
+});
+
+document.addEventListener('DOMContentLoaded', () => {
+  const backToTopButton = document.getElementById('back-to-top');
+  if (!backToTopButton) {
+    throw new Error('上に戻るボタンが見つかりませんでした');
+  }
+
+  backToTopButton.addEventListener('click', () => {
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth',
     });
   });
 });

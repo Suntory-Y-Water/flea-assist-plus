@@ -1,24 +1,5 @@
 import { MessageActionsId, MessageActionsIdWithSingleSelector, ProductData } from './types';
 
-const waitForElementToAppear = async (
-  selector: string,
-  interval: number = 1000,
-  timeout: number = 5000,
-): Promise<Element | null> => {
-  const startTime = Date.now();
-
-  while (Date.now() - startTime <= timeout) {
-    const element = document.querySelector(selector);
-    if (element) {
-      return element;
-    }
-    await new Promise((resolve) => setTimeout(resolve, interval));
-  }
-
-  console.log(`Element not found: ${selector}`);
-  return null;
-};
-
 const getProductData = (element: Element, count: number): ProductData => {
   const nameElement = element.querySelector('.content__97a42da1 > span');
   const imageElement = element.querySelector(
@@ -36,20 +17,26 @@ const getProductData = (element: Element, count: number): ProductData => {
 };
 
 chrome.runtime.onMessage.addListener(async (request: MessageActionsId, sender, sendResponse) => {
-  if (request.action == 'fetchSelectors') {
+  if (request.action === 'fetchSelectors') {
     let details = [];
-    for (let count = 1; count <= 50; count++) {
+    let count = 1;
+
+    // 商品の要素が見つかるまでループを回す
+    while (true) {
       const selector = `#currentListing > div.merList.border__17a1e07b.separator__17a1e07b > div:nth-child(${count}) > div.content__884ec505 > a > div > div`;
       try {
-        const element = await waitForElementToAppear(selector, 1000, 5000);
+        const element = document.querySelector(selector);
         if (element) {
           const productData = getProductData(element, count);
           details.push(productData);
+          count++;
         } else {
-          console.log(`Product ${count} not found.`);
+          break;
         }
       } catch (error) {
-        console.log(`Error finding product ${count}:`, error);
+        console.error('商品の取得中にエラーが発生しました。');
+        console.error(`Error : ${error}`);
+        break;
       }
     }
 
@@ -62,16 +49,13 @@ chrome.runtime.onMessage.addListener(async (request: MessageActionsId, sender, s
 // 受信したメッセージのセレクター要素をクリックする。
 chrome.runtime.onMessage.addListener(
   (request: MessageActionsIdWithSingleSelector, sender, sendResponse) => {
-    if (request.action !== 'cloneAndDeleteItem') {
-      console.error(`メッセージID : ${request.action}`);
-      throw new Error('異なるメッセージを受信しました。');
+    if (request.action === 'cloneAndDeleteItem') {
+      const itemSelector = document.querySelector<HTMLElement>(request.selector);
+      if (!itemSelector) {
+        throw new Error('要素が見つかりませんでした。');
+      }
+      itemSelector.click();
+      sendResponse();
     }
-
-    const itemSelector = document.querySelector<HTMLElement>(request.selector);
-    if (!itemSelector) {
-      throw new Error('要素が見つかりませんでした。');
-    }
-    itemSelector.click();
-    sendResponse();
   },
 );
