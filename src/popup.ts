@@ -45,6 +45,18 @@ document.addEventListener('DOMContentLoaded', () => {
 
             // 商品詳細をまとめる
             productDetails.appendChild(productName);
+
+            // 商品が公開停止中の場合だけ表示
+            if (product.notPublic) {
+              const productPublisStatus = document.createElement('span');
+              productPublisStatus.textContent = product.notPublic ? '公開停止中' : '';
+              productPublisStatus.classList.add('not-public');
+              productDetails.appendChild(productPublisStatus);
+
+              // 公開停止中の場合、背景色を薄赤色にしたいためIdを追加
+              listingItem.style.backgroundColor = 'rgba(255, 0, 0, 0.1)';
+            }
+
             productDetails.appendChild(productImage);
 
             // リストアイテムにチェックボックスと商品詳細を追加
@@ -56,7 +68,7 @@ document.addEventListener('DOMContentLoaded', () => {
             inputCount++;
           }
         } else {
-          console.error('No data received or container not found.');
+          console.error('データが取得できないか、コンテナ要素が見つかりませんでした。');
         }
       },
     );
