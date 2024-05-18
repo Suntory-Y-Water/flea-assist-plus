@@ -7,12 +7,18 @@ const getProductData = (element: Element, count: number): ProductData => {
   );
   const cloneAndDeleteItemElement = element.querySelector('#clone-and-delete-item');
 
+  // 公開停止中
+  const notPublicElement = element.querySelector(
+    'div.content__97a42da1 > span.informationLabel__97a42da1',
+  );
+
   return {
     name: nameElement ? nameElement.textContent : null,
     imageUrl: imageElement ? imageElement.getAttribute('src') : null,
     cloneAndDeleteItemSelector: cloneAndDeleteItemElement
       ? `#currentListing > div.merList.border__17a1e07b.separator__17a1e07b > div:nth-child(${count}) > div.content__884ec505 > a > div > div > #clone-and-delete-item`
       : null,
+    notPublic: notPublicElement ? true : false,
   };
 };
 
