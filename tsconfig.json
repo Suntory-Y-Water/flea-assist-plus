@@ -4,7 +4,15 @@
     "module": "ESNext",
     "lib": ["ESNext", "DOM"],
     "moduleResolution": "Node",
-    "strict": true
+    "strict": true,
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
+
+    "baseUrl": "./",
+    "paths": {
+      "@/*": ["src/*"]
+    },
+    "types": ["vitest/globals", "@types/chrome"]
   },
-  "include": ["src/"]
+  "include": ["src", "node_modules/vitest/global.d.ts", "vite.config.ts", "vitest-setup.ts"]
 }
