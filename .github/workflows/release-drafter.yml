@@ -1,13 +1,9 @@
 name: Create Release Note
 
 on:
-  pull_request:
-    # PRが閉じたタイミングで実行
-    types:
-      - closed
-    # mainブランチのみを対象とする
+  push:
     branches:
-      - develop # テスト用にdevelopブランチを使用
+      - '**'
 
 permissions:
   # github リリースを作成するには書き込み権限が必要です。
@@ -18,7 +14,7 @@ permissions:
 jobs:
   release:
     # releaseブランチからマージされる変更が対象
-    if: github.event.pull_request.merged == true && github.event.pull_request.base.ref == 'develop'
+    if: github.event_name == 'push'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
