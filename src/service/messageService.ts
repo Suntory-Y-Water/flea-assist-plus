@@ -75,9 +75,15 @@ export class MessageService implements IMessageService {
           const notRelistItems = items.itemList.filter(
             (item) => !relistItems.itemList.some((relistItem) => relistItem.name === item.name),
           );
+          // notRelistItemsの中から、重複を削除する。削除するときは商品名をキーに判断する
+          const uniqueNotRelistItems = notRelistItems.filter(
+            (item, index, self) => self.findIndex((t) => t.name === item.name) === index,
+          );
 
           this.loggingService.log('再出品していない商品のリストをChrome Storageに保存します。');
-          this.storageService.setToChromeStorage('notRelistItems', { itemList: notRelistItems });
+          this.storageService.setToChromeStorage('notRelistItems', {
+            itemList: uniqueNotRelistItems,
+          });
           this.loggingService.log('再出品していない商品のリストをChrome Storageに保存しました。');
 
           alert('再出品していない商品を特定しました。\n拡張機能のオプションから確認してください。');
