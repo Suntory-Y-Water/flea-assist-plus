@@ -10,9 +10,7 @@ on:
       - main
 
 permissions:
-  # github リリースを作成するには書き込み権限が必要です。
   contents: write
-  # リリースノートを書くためwrite用のpermissionを付与
   pull-requests: write
 
 jobs:
@@ -35,15 +33,9 @@ jobs:
       - name: Build project
         run: pnpm run build
 
-      # distフォルダをzip化
-      - name: Zip dist folder
-        run: zip -r dist.zip dist
-
       - name: Create Release Tag And Note
         env:
-          # このトークンは自動生成されるのでecretsを登録する必要ない
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          # PRのタイトルと内容をRelease内容に追加する
           RELEASE_TAG: ${{ github.event.pull_request.title }}
         uses: release-drafter/release-drafter@v5
         with:
@@ -51,11 +43,3 @@ jobs:
           name: Release ${{ env.RELEASE_TAG }}
           version: ${{ env.RELEASE_TAG }}
           publish: true
-
-      - name: Upload Release Asset
-        uses: actions/upload-release-asset@v1
-        with:
-          upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: ./dist.zip
-          asset_name: dist.zip
-          asset_content_type: application/zip
