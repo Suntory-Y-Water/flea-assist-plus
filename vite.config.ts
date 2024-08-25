@@ -5,9 +5,9 @@ import tsconfigPaths from 'vite-tsconfig-paths';
 
 const manifest = defineManifest({
   manifest_version: 3,
-  name: 'フリマアシストぷらす',
+  name: 'らくらくチェッカー',
   version: '1.0.0',
-  description: 'フリマアシストをさらにやりやすくするための拡張機能',
+  description: 'フリマアプリで再出品していない商品を見つけることができる拡張機能',
   permissions: ['tabs', 'activeTab', 'scripting', 'storage'],
   host_permissions: ['https://jp.mercari.com/*'],
   background: {
@@ -25,6 +25,13 @@ const manifest = defineManifest({
   options_page: 'options.html',
   icons: {
     128: 'truck.png',
+  },
+  commands: {
+    _execute_action: {
+      suggested_key: {
+        default: 'Ctrl+Shift+Y',
+      },
+    },
   },
 });
 

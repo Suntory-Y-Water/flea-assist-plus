@@ -1,0 +1,58 @@
+{
+  "../../../../../../@crx/manifest": {
+    "file": "assets/crx-manifest.js-CBCAayJx.js",
+    "name": "crx-manifest.js",
+    "src": "../../../../../../@crx/manifest",
+    "isEntry": true
+  },
+  "_inversify.config-CFYDU77S.js": {
+    "file": "assets/inversify.config-CFYDU77S.js",
+    "name": "inversify.config"
+  },
+  "_modulepreload-polyfill-B5Qt9EMX.js": {
+    "file": "assets/modulepreload-polyfill-B5Qt9EMX.js",
+    "name": "modulepreload-polyfill"
+  },
+  "content.ts-loader.js": {
+    "file": "assets/content.ts-loader-DrChNuLG.js",
+    "src": "content.ts-loader.js"
+  },
+  "options.html": {
+    "file": "assets/options.html-Dx59ubSS.js",
+    "name": "options.html",
+    "src": "options.html",
+    "isEntry": true,
+    "imports": [
+      "_modulepreload-polyfill-B5Qt9EMX.js",
+      "_inversify.config-CFYDU77S.js"
+    ]
+  },
+  "popup.html": {
+    "file": "assets/popup.html-LaeSpWlw.js",
+    "name": "popup.html",
+    "src": "popup.html",
+    "isEntry": true,
+    "imports": [
+      "_modulepreload-polyfill-B5Qt9EMX.js",
+      "_inversify.config-CFYDU77S.js"
+    ]
+  },
+  "src/background.ts": {
+    "file": "assets/background.ts-B2XAK-k0.js",
+    "name": "background.ts",
+    "src": "src/background.ts",
+    "isEntry": true,
+    "imports": [
+      "_inversify.config-CFYDU77S.js"
+    ]
+  },
+  "src/content.ts": {
+    "file": "assets/content.ts-Y2tcMTuv.js",
+    "name": "content.ts",
+    "src": "src/content.ts",
+    "isEntry": true,
+    "imports": [
+      "_inversify.config-CFYDU77S.js"
+    ]
+  }
+}

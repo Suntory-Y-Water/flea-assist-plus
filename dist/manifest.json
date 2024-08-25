@@ -1,8 +1,8 @@
 {
   "manifest_version": 3,
-  "name": "フリマアシストぷらす",
+  "name": "らくらくチェッカー",
   "version": "1.0.0",
-  "description": "フリマアシストをさらにやりやすくするための拡張機能",
+  "description": "フリマアプリで再出品していない商品を見つけることができる拡張機能",
   "permissions": [
     "tabs",
     "activeTab",
@@ -18,12 +18,12 @@
   },
   "content_scripts": [
     {
+      "js": [
+        "assets/content.ts-loader-DrChNuLG.js"
+      ],
       "matches": [
         "https://jp.mercari.com/todos",
         "https://jp.mercari.com/mypage/listings"
-      ],
-      "js": [
-        "src/content.ts-loader.js"
       ]
     }
   ],
@@ -34,14 +34,22 @@
   "icons": {
     "128": "truck.png"
   },
+  "commands": {
+    "_execute_action": {
+      "suggested_key": {
+        "default": "Ctrl+Shift+Y"
+      }
+    }
+  },
   "web_accessible_resources": [
     {
       "matches": [
-        "<all_urls>"
+        "https://jp.mercari.com/*",
+        "https://jp.mercari.com/*"
       ],
       "resources": [
-        "**/*",
-        "*"
+        "assets/inversify.config-CFYDU77S.js",
+        "assets/content.ts-Y2tcMTuv.js"
       ],
       "use_dynamic_url": true
     }

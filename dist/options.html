@@ -1,12 +1,73 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ja">
   <head>
-    <title>Vite Dev Mode</title>
-    <script src="/assets/loading-page-1924caaa.js" type="module"></script>
+    <meta charset="UTF-8" />
+    <title>未出品の商品一覧</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        background-color: #121212;
+        color: #fff;
+        margin: 0;
+        padding: 20px;
+        width: 768px;
+        margin: 0 auto;
+      }
+
+      h1 {
+        text-align: center;
+        margin-bottom: 20px;
+      }
+
+      .item-list {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+      }
+
+      .item {
+        display: flex;
+        flex-direction: row;
+        background-color: #1e1e1e;
+        border-radius: 8px;
+        padding: 10px;
+        transition: background-color 0.3s ease;
+      }
+
+      .item:hover {
+        background-color: #2e2e2e;
+        /* 文字の下線を白くする */
+      }
+
+      .item img {
+        max-width: 80px;
+        max-height: 80px;
+        border-radius: 4px;
+        margin-right: 15px;
+      }
+
+      .item-details {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+      }
+
+      .item-details a {
+        color: #1e90ff;
+        text-decoration: none;
+        font-size: 16px;
+      }
+
+      .item-details a:hover {
+        text-decoration: underline;
+      }
+    </style>
+    <script type="module" crossorigin src="/assets/options.html-Dx59ubSS.js"></script>
+    <link rel="modulepreload" crossorigin href="/assets/modulepreload-polyfill-B5Qt9EMX.js">
+    <link rel="modulepreload" crossorigin href="/assets/inversify.config-CFYDU77S.js">
   </head>
-  <body
-    style="font-family: Arial, sans-serif; padding: 20px; text-align: center"
-  >
-    <h1>Vite Dev Mode</h1>
+  <body>
+    <h1>未出品の商品一覧</h1>
+    <div id="item-list" class="item-list"></div>
   </body>
 </html>
