@@ -1,42 +1,35 @@
-import { MessageActionsIdWithSelectors, MessageActionsIdWithSingleSelector } from './types';
-let selectors: string[];
-let currentSelectorIndex = 0;
+import { container } from './container/inversify.config';
+import { TYPES } from './container/inversify.types';
+import { ILoggingService } from './service/loggingService';
+import { IMessageService } from './service/messageService';
+import { MessageActionsId } from './types';
 
-chrome.runtime.onMessage.addListener(
-  async (request: MessageActionsIdWithSelectors, sender, sendResponse) => {
-    if (request.action === 'startListings') {
-      console.log('再出品処理開始のメッセージを受信しました。');
-      selectors = request.selectors;
-      currentSelectorIndex = 0;
-      if (selectors.length > 0) {
-        console.log('商品の再出品を開始します。');
-        sendMessageToContentScript(selectors[currentSelectorIndex]);
-      }
-      sendResponse();
-      return true;
+const messageService = container.get<IMessageService>(TYPES.MessageService);
+const loggingService = container.get<ILoggingService>(TYPES.LoggingService);
+
+chrome.runtime.onMessage.addListener(async (request: MessageActionsId, _sender, sendResponse) => {
+  if (request.action === 'todosItems') {
+    loggingService.log('BackgroundでtodosItemsメッセージを受信しました。');
+    loggingService.log('content_scriptに商品取得メッセージを送信します。');
+    const tabId = await messageService.getActiveTab();
+    if (tabId === undefined) {
+      throw new Error('タブIDが取得できませんでした');
     }
-  },
-);
-
-const sendMessageToContentScript = (selector: string) => {
-  chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
-    if (tabs.length > 0 && tabs[0].id !== undefined) {
-      chrome.tabs.sendMessage<MessageActionsIdWithSingleSelector>(tabs[0].id, {
-        action: 'cloneAndDeleteItem',
-        selector: selector,
-      });
-    }
-  });
-};
-
-chrome.tabs.onRemoved.addListener((tabId, removeInfo) => {
-  if (++currentSelectorIndex < selectors.length) {
-    console.log(`${currentSelectorIndex}番目の商品を再出品します。`);
-    // 1秒待ってから再出品処理を行う
-    setTimeout(() => {
-      sendMessageToContentScript(selectors[currentSelectorIndex]);
-    }, 1000);
-  } else {
-    console.log('全ての商品を再出品しました。');
+    messageService.sendContentScriptMessage(tabId, { action: 'getTodosItems' });
+    loggingService.log('content_scriptに商品取得メッセージを送信終了');
+    sendResponse();
   }
+
+  if (request.action === 'getListingItems') {
+    loggingService.log('BackgroundでgetListingItemsメッセージを受信しました。');
+    loggingService.log('content_scriptに商品比較メッセージを送信します。');
+    const tabId = await messageService.getActiveTab();
+    if (tabId === undefined) {
+      throw new Error('タブIDが取得できませんでした');
+    }
+    messageService.sendContentScriptMessage(tabId, { action: 'getListingItems' });
+    loggingService.log('content_scriptに商品比較メッセージを送信終了');
+    sendResponse();
+  }
+  return true;
 });

@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <title>未出品の商品一覧</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        background-color: #121212;
+        color: #fff;
+        margin: 0;
+        padding: 20px;
+        width: 768px;
+        margin: 0 auto;
+      }
+
+      h1 {
+        text-align: center;
+        margin-bottom: 20px;
+      }
+
+      .item-list {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+      }
+
+      .item {
+        display: flex;
+        flex-direction: row;
+        background-color: #1e1e1e;
+        border-radius: 8px;
+        padding: 10px;
+        transition: background-color 0.3s ease;
+      }
+
+      .item:hover {
+        background-color: #2e2e2e;
+        /* 文字の下線を白くする */
+      }
+
+      .item img {
+        max-width: 80px;
+        max-height: 80px;
+        border-radius: 4px;
+        margin-right: 15px;
+      }
+
+      .item-details {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+      }
+
+      .item-details a {
+        color: #1e90ff;
+        text-decoration: none;
+        font-size: 16px;
+      }
+
+      .item-details a:hover {
+        text-decoration: underline;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>未出品の商品一覧</h1>
+    <div id="item-list" class="item-list"></div>
+    <script type="module" src="src/options.ts"></script>
+  </body>
+</html>
