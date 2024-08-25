@@ -6,7 +6,8 @@
   "permissions": [
     "tabs",
     "activeTab",
-    "scripting"
+    "scripting",
+    "storage"
   ],
   "host_permissions": [
     "https://jp.mercari.com/*"
@@ -29,6 +30,7 @@
   "action": {
     "default_popup": "popup.html"
   },
+  "options_page": "options.html",
   "web_accessible_resources": [
     {
       "matches": [

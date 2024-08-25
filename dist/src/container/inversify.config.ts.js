@@ -1,5 +1,5 @@
-import "/vendor/.vite-deps-reflect-metadata.js__v--622bb7c6.js";
-import { Container } from "/vendor/.vite-deps-inversify.js__v--622bb7c6.js";
+import "/vendor/.vite-deps-reflect-metadata.js__v--1a5dcd18.js";
+import { Container } from "/vendor/.vite-deps-inversify.js__v--1a5dcd18.js";
 import { TYPES } from "/src/container/inversify.types.ts.js";
 import { SelectorService } from "/src/service/selectorService.ts.js";
 import { ProductService } from "/src/service/productService.ts.js";

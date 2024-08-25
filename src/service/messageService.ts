@@ -112,13 +112,11 @@ export class MessageService implements IMessageService {
             (item) => !relistItems.itemList.some((relistItem) => relistItem.name === item.name),
           );
 
-          this.loggingService.log('再出品していない商品のリストをローカルストレージに保存します。');
-          this.storageService.set('notRelistItems', { itemList: notRelistItems });
-          this.loggingService.log(
-            '再出品していない商品のリストをローカルストレージに保存しました。',
-          );
+          this.loggingService.log('再出品していない商品のリストをChrome Storageに保存します。');
+          this.storageService.setToChromeStorage('notRelistItems', { itemList: notRelistItems });
+          this.loggingService.log('再出品していない商品のリストをChrome Storageに保存しました。');
 
-          alert(notRelistItems.map((item) => item.name).join('\n'));
+          alert('再出品していない商品を特定しました。\n拡張機能のオプションから確認してください。');
           this.loggingService.log('再出品していない商品の特定を終了します。');
 
           sendResponse({ success: true });

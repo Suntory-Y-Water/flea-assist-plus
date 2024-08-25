@@ -56,14 +56,14 @@ export class SelectorService implements ISelectorService {
     // マッチした場合は商品名を返し、それ以外は null を返す
     if (match) {
       // マッチした商品の名前を返す
-      return match[1].trim().replace(/\s+/g, ' ');
+      return match[1].trim().replace(/\s+/g, '');
     }
 
     throw new Error('商品名が取得できませんでした');
   }
 
   getRelistItemName(name: string): string {
-    return name.trim().replace(/\s+/g, ' ');
+    return name.trim().replace(/\s+/g, '');
   }
 
   isRelistItem(name: string): boolean {

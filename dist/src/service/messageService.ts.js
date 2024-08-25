@@ -9,7 +9,7 @@ var __decorateClass = (decorators, target, key, kind) => {
   return result;
 };
 var __decorateParam = (index, decorator) => (target, key) => decorator(target, key, index);
-import { injectable, inject } from "/vendor/.vite-deps-inversify.js__v--622bb7c6.js";
+import { injectable, inject } from "/vendor/.vite-deps-inversify.js__v--1a5dcd18.js";
 import { TYPES } from "/src/container/inversify.types.ts.js";
 import { Constants } from "/src/constants/index.ts.js";
 export let MessageService = class {
@@ -85,12 +85,10 @@ export let MessageService = class {
           const notRelistItems = items.itemList.filter(
             (item) => !relistItems.itemList.some((relistItem) => relistItem.name === item.name)
           );
-          this.loggingService.log("再出品していない商品のリストをローカルストレージに保存します。");
-          this.storageService.set("notRelistItems", { itemList: notRelistItems });
-          this.loggingService.log(
-            "再出品していない商品のリストをローカルストレージに保存しました。"
-          );
-          alert(notRelistItems.map((item) => item.name).join("\n"));
+          this.loggingService.log("再出品していない商品のリストをChrome Storageに保存します。");
+          this.storageService.setToChromeStorage("notRelistItems", { itemList: notRelistItems });
+          this.loggingService.log("再出品していない商品のリストをChrome Storageに保存しました。");
+          alert("再出品していない商品を特定しました。\n拡張機能のオプションから確認してください。");
           this.loggingService.log("再出品していない商品の特定を終了します。");
           sendResponse({ success: true });
         }

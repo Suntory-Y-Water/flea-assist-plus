@@ -9,8 +9,8 @@ var __decorateClass = (decorators, target, key, kind) => {
   return result;
 };
 var __decorateParam = (index, decorator) => (target, key) => decorator(target, key, index);
-import "/vendor/.vite-deps-reflect-metadata.js__v--622bb7c6.js";
-import { injectable, inject } from "/vendor/.vite-deps-inversify.js__v--622bb7c6.js";
+import "/vendor/.vite-deps-reflect-metadata.js__v--1a5dcd18.js";
+import { injectable, inject } from "/vendor/.vite-deps-inversify.js__v--1a5dcd18.js";
 import { TYPES } from "/src/container/inversify.types.ts.js";
 export let SelectorService = class {
   constructor(loggingService) {
@@ -45,12 +45,12 @@ export let SelectorService = class {
     const regex = /「([^」]+)」/;
     const match = name.match(regex);
     if (match) {
-      return match[1].trim().replace(/\s+/g, " ");
+      return match[1].trim().replace(/\s+/g, "");
     }
     throw new Error("商品名が取得できませんでした");
   }
   getRelistItemName(name) {
-    return name.trim().replace(/\s+/g, " ");
+    return name.trim().replace(/\s+/g, "");
   }
   isRelistItem(name) {
     const falsePatterns = [

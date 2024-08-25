@@ -9,8 +9,8 @@ var __decorateClass = (decorators, target, key, kind) => {
   return result;
 };
 var __decorateParam = (index, decorator) => (target, key) => decorator(target, key, index);
-import "/vendor/.vite-deps-reflect-metadata.js__v--622bb7c6.js";
-import { injectable, inject } from "/vendor/.vite-deps-inversify.js__v--622bb7c6.js";
+import "/vendor/.vite-deps-reflect-metadata.js__v--1a5dcd18.js";
+import { injectable, inject } from "/vendor/.vite-deps-inversify.js__v--1a5dcd18.js";
 import { TYPES } from "/src/container/inversify.types.ts.js";
 import { Constants } from "/src/constants/index.ts.js";
 export let ProductService = class {

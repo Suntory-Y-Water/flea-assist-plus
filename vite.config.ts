@@ -8,7 +8,7 @@ const manifest = defineManifest({
   name: 'フリマアシストぷらす',
   version: '1.0.0',
   description: 'フリマアシストをさらにやりやすくするための拡張機能',
-  permissions: ['tabs', 'activeTab', 'scripting'],
+  permissions: ['tabs', 'activeTab', 'scripting', 'storage'],
   host_permissions: ['https://jp.mercari.com/*'],
   background: {
     service_worker: 'src/background.ts',
@@ -22,6 +22,7 @@ const manifest = defineManifest({
   action: {
     default_popup: 'popup.html',
   },
+  options_page: 'options.html',
 });
 
 export default defineConfig({

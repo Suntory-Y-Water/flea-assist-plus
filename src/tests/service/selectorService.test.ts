@@ -49,7 +49,7 @@ describe('SelectorServiceのテスト', () => {
     );
 
     // assert
-    expect(result).toBe(`魔弾 マッド・ゲンド・チェスター マッドゲンドチェスター 2枚`);
+    expect(result).toBe(`魔弾マッド・ゲンド・チェスターマッドゲンドチェスター2枚`);
   });
 
   test('getItemName tests 商品名を取得できずエラーをスローする', () => {
