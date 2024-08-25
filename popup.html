@@ -51,7 +51,7 @@
         margin-left: 8px;
       }
 
-      .start-button {
+      button {
         background-color: #00af4f;
         border: none;
         color: #fff;
@@ -63,14 +63,15 @@
         position: relative;
         transition: background-color 0.4s, transform 0.4s;
         cursor: pointer;
+        width: 100%;
       }
 
-      .start-button:hover {
+      button:hover {
         background-color: #007f3b;
         color: white;
       }
 
-      .start-button:active {
+      button:active {
         border-bottom: none;
       }
 
@@ -120,13 +121,16 @@
   <body>
     <main>
       <h1>フリマアシストぷらす</h1>
-      <button id="start-button" class="start-button">再出品する</button>
+      <h2>売れた商品を取得</h2>
       <div>
-        <p>選択した商品を自動で再出品します。</p>
+        <p>ボタンを押して再出品していない商品を特定します。</p>
       </div>
-      <h2>出品中の商品</h2>
-      <div class="listings-container"></div>
-      <button id="back-to-top" class="back-to-top">↑</button>
+      <button id="item-info" class="item-info">商品を取得</button>
+      <h2>出品中の商品を取得</h2>
+      <div>
+        <p>ボタンを押して出品中の商品を取得します。</p>
+      </div>
+      <button id="relist-item" class="relist-item">商品を取得</button>
     </main>
     <script type="module" src="src/popup.ts"></script>
   </body>
