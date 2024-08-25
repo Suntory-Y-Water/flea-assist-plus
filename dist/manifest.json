@@ -31,6 +31,9 @@
     "default_popup": "popup.html"
   },
   "options_page": "options.html",
+  "icons": {
+    "128": "truck.png"
+  },
   "web_accessible_resources": [
     {
       "matches": [

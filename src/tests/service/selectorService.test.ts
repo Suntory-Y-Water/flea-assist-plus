@@ -136,6 +136,6 @@ describe('SelectorServiceのテスト', () => {
       'https://static.mercdn.net/c!/w=240/thumb/photos/m11963317881_1.jpg?1724333490',
     );
 
-    expect(defaultResult).toBe('./mercari.png');
+    expect(defaultResult).toBe('./box.png');
   });
 });

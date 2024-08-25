@@ -23,6 +23,9 @@ const manifest = defineManifest({
     default_popup: 'popup.html',
   },
   options_page: 'options.html',
+  icons: {
+    128: 'truck.png',
+  },
 });
 
 export default defineConfig({

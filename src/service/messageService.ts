@@ -2,7 +2,6 @@ import { MessageActionsId, MessageResponse, TodosItems } from '../types';
 import { injectable, inject } from 'inversify';
 import { TYPES } from '../container/inversify.types';
 import { ILoggingService } from './loggingService';
-import { IProductService } from './productService';
 import { ISelectorService } from './selectorService';
 import { Constants } from '../constants';
 import { IStorageService } from './storageService';
@@ -26,7 +25,6 @@ export interface IMessageService {
 export class MessageService implements IMessageService {
   constructor(
     @inject(TYPES.LoggingService) private loggingService: ILoggingService,
-    @inject(TYPES.ProductService) private productService: IProductService,
     @inject(TYPES.SelectorService) private selectorService: ISelectorService,
     @inject(TYPES.StorageService) private storageService: IStorageService,
   ) {}
@@ -39,42 +37,8 @@ export class MessageService implements IMessageService {
         sendResponse: (response?: MessageResponse) => void,
       ) => {
         if (request.action === 'getTodosItems') {
-          let details = [];
-          let count = 1;
-
           this.loggingService.log('商品の取得を開始します。');
-          // 商品の要素が見つかるまでループを回す
-          while (true) {
-            const selector = `#main > div.merList.border__17a1e07b.separator__17a1e07b > div:nth-child(${count}) > div.content__884ec505`;
-            try {
-              const element = document.querySelector(selector);
-              if (element) {
-                const isItem = this.selectorService.isRelistItem(
-                  this.selectorService.getTextContent(
-                    element,
-                    Constants.SELECTOR_CONSTANTS.TODOS_CONSTANTS.NAME,
-                  ),
-                );
-                if (!isItem) {
-                  count++;
-                  continue;
-                }
-                const productData = this.productService.getTodosItem(element);
-                details.push(productData);
-                count++;
-              } else {
-                break;
-              }
-            } catch (error) {
-              this.loggingService.error('商品の取得中にエラーが発生しました');
-              this.loggingService.error(`エラー内容 : ${(error as Error).message}`);
-              break;
-            }
-          }
-          this.loggingService.log('商品の取得が完了しました。');
-          const itemList: TodosItems = {
-            itemList: details,
-          };
+          const itemList = this.selectorService.getAllItemsFromTodos();
 
           this.loggingService.log('商品リストをローカルストレージに保存します。');
           this.storageService.set('itemList', itemList);
@@ -106,7 +70,7 @@ export class MessageService implements IMessageService {
             return;
           }
 
-          const relistItems = this.getAllItemsFromPage();
+          const relistItems = this.selectorService.getAllItemsFromListings();
           // itemsのnameから、relistItemsのnameに一致しないものを抽出
           const notRelistItems = items.itemList.filter(
             (item) => !relistItems.itemList.some((relistItem) => relistItem.name === item.name),
@@ -175,33 +139,5 @@ export class MessageService implements IMessageService {
         }
       });
     });
-  }
-  private getAllItemsFromPage(): TodosItems {
-    this.loggingService.log('出品中の商品を全件取得します');
-    let details = [];
-    let count = 1;
-    let element: Element | null;
-    while (
-      (element = document.querySelector(
-        `#currentListing > div > div:nth-child(${count}) > div.content__884ec505`,
-      )) !== null
-    ) {
-      try {
-        if (element) {
-          const productData = this.productService.getListingsItem(element);
-          details.push(productData);
-          count++;
-        } else {
-          break;
-        }
-      } catch (error) {
-        throw new Error(`商品の取得中にエラーが発生しました ${error}`);
-      }
-    }
-    this.loggingService.log('商品の取得が完了しました。');
-    const itemList: TodosItems = {
-      itemList: details,
-    };
-    return itemList;
   }
 }

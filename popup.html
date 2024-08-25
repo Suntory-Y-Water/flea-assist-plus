@@ -15,42 +15,6 @@
         padding: 16px;
       }
 
-      .listings-container {
-        flex-wrap: wrap;
-      }
-
-      .product-details {
-        padding-left: 8px;
-        padding-right: 8px;
-      }
-
-      .not-public {
-        color: #ff0000;
-        font-weight: bold;
-        display: block;
-        padding-bottom: 4px;
-      }
-
-      .listing-item {
-        display: flex;
-        background-color: #dfdede;
-        border-radius: 0.375rem;
-        width: 100%;
-        margin-top: 8px;
-        margin-bottom: 8px;
-      }
-
-      .listing-item img {
-        width: 100px;
-        height: auto;
-        border-radius: 0.375rem;
-        margin-bottom: 8px;
-      }
-
-      .item-checkbox {
-        margin-left: 8px;
-      }
-
       button {
         background-color: #00af4f;
         border: none;
@@ -75,46 +39,10 @@
         border-bottom: none;
       }
 
-      .item-checkbox {
-        cursor: pointer;
-      }
-      .product-details label {
-        display: block;
-        font-size: 1.17em;
-        margin-block-start: 1em;
-        margin-block-end: 1em;
-        margin-inline-start: 0px;
-        margin-inline-end: 0px;
+      span {
+        color: #da0000;
         font-weight: bold;
-        unicode-bidi: isolate;
-      }
-      .product-details label {
-        cursor: pointer;
-      }
-
-      .product-details label:hover {
-        text-decoration: underline;
-      }
-      .back-to-top {
-        position: fixed;
-        bottom: 20px;
-        right: 20px;
-        padding: 10px 20px;
-        background-color: #00af4f;
-        color: white;
-        border: none;
-        border-radius: 0.375rem;
-        cursor: pointer;
-        opacity: 0.8;
-        transition: opacity 0.4s;
-      }
-
-      .back-to-top:hover {
-        background-color: #007f3b;
-        color: white;
-      }
-      .back-to-top:active {
-        border-bottom: none;
+        font-size: medium;
       }
     </style>
   </head>
@@ -124,13 +52,15 @@
       <h2>売れた商品を取得</h2>
       <div>
         <p>ボタンを押して再出品していない商品を特定します。</p>
+        <p>必ず<span>やることリスト</span>ページでボタンを押してください。</p>
       </div>
       <button id="item-info" class="item-info">商品を取得</button>
-      <h2>出品中の商品を取得</h2>
+      <h2>再出品していない商品を特定</h2>
       <div>
-        <p>ボタンを押して出品中の商品を取得します。</p>
+        <p>ボタンを押して再出品していない商品を特定します。</p>
+        <p>必ず<span>出品した商品</span>ページでボタンを押してください。</p>
       </div>
-      <button id="relist-item" class="relist-item">商品を取得</button>
+      <button id="relist-item" class="relist-item">特定する</button>
     </main>
     <script type="module" src="src/popup.ts"></script>
   </body>
