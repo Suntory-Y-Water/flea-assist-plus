@@ -30,9 +30,6 @@ jobs:
       - name: Install dependencies
         run: pnpm install
 
-      - name: Build project
-        run: pnpm run build
-
       - name: Create Release Tag And Note
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

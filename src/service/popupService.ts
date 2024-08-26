@@ -1,9 +1,9 @@
 import 'reflect-metadata';
 import { injectable, inject } from 'inversify';
-import { ILoggingService } from './loggingService';
-import { IMessageService } from './messageService';
-import { TYPES } from '../container/inversify.types';
-import { IStorageService } from './storageService';
+import type { ILoggingService } from './loggingService';
+import type { IMessageService } from './messageService';
+import type { IStorageService } from './storageService';
+import { TYPES } from '@/container/inversify.types';
 
 export interface IPopupService {
   getItemListButtonClick(): void;

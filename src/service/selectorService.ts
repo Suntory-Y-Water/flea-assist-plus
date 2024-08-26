@@ -1,7 +1,7 @@
 import 'reflect-metadata';
 import { injectable, inject } from 'inversify';
 import { TYPES } from '../container/inversify.types';
-import { ILoggingService } from './loggingService';
+import type { ILoggingService } from './loggingService';
 import { Item, TodosItems } from '@/types';
 import { Constants } from '@/constants';
 
@@ -124,11 +124,11 @@ export class SelectorService implements ISelectorService {
   private collectItemsFromPage(
     baseSelector: string,
     itemSelector: string,
-    getItemData: (element: Element) => any,
+    getItemData: (element: Element) => Item,
     validateItem?: (element: Element) => boolean,
   ): TodosItems {
     this.loggingService.log('商品の取得を開始します。');
-    let details = [];
+    const details: Item[] = [];
     let count = 1;
     let element: Element | null;
 
