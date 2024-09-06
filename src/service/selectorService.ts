@@ -85,6 +85,7 @@ export class SelectorService implements ISelectorService {
       /取引メッセージがあります。返信をお願いします/,
       /受取りました。.*取引完了してください/,
       /まとめ商品/,
+      /発送されました/,
     ];
 
     for (const pattern of falsePatterns) {
