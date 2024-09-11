@@ -19,14 +19,16 @@ export class StorageService implements IStorageService {
       }
       return JSON.parse(result) as T;
     } catch (error) {
-      return null;
+      throw new Error(`データの取得中にエラーが発生しました ${error}`);
     }
   }
 
   async set<T>(key: string, value: T): Promise<void> {
     try {
       localStorage.setItem(key, JSON.stringify(value));
-    } catch (error) {}
+    } catch (error) {
+      throw new Error(`データの設定中にエラーが発生しました ${error}`);
+    }
   }
 
   async pop(key: string): Promise<boolean> {
@@ -34,7 +36,7 @@ export class StorageService implements IStorageService {
       localStorage.removeItem(key);
       return true;
     } catch (error) {
-      return false;
+      throw new Error(`データの設定中にエラーが発生しました ${error}`);
     }
   }
   async setToChromeStorage<T>(key: string, value: T): Promise<void> {

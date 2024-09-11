@@ -1,10 +1,9 @@
 import { MessageActionsId, MessageResponse, TodosItems } from '../types';
 import { injectable, inject } from 'inversify';
 import { TYPES } from '../container/inversify.types';
-import { ILoggingService } from './loggingService';
-import { ISelectorService } from './selectorService';
-import { Constants } from '../constants';
-import { IStorageService } from './storageService';
+import type { ILoggingService } from './loggingService';
+import type { ISelectorService } from './selectorService';
+import type { IStorageService } from './storageService';
 
 export interface IMessageService {
   handleTodosItemMessage(): void;

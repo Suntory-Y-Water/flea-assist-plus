@@ -2,44 +2,55 @@ name: Create Release Note
 
 on:
   pull_request:
-    # PRが閉じたタイミングで実行
     types:
       - closed
-    # mainブランチのみを対象とする
     branches:
       - main
 
-permissions:
-  contents: write
-  pull-requests: write
-
 jobs:
-  release:
-    # releaseブランチからマージされる変更が対象
+  build-and-release:
+    permissions:
+      contents: write
+      pull-requests: write
     if: github.event.pull_request.merged == true && startsWith(github.head_ref, 'release')
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
         with:
           node-version: '20'
       - uses: pnpm/action-setup@v4
         with:
           version: 9
 
-      - name: Install dependencies
-        run: pnpm install
+      - name: install dependencies
+        run: pnpm install --frozen-lockfile
 
-      - name: Build project
-        run: pnpm run build
+      - name: build dependencies
+        run: pnpm build
 
-      - name: Create Release Tag And Note
+      # ZIPファイルを作成する（distディレクトリを対象）
+      - name: Archive Release
+        uses: thedoctor0/zip-release@main
+        with:
+          type: 'zip'
+          filename: extensions.zip
+          # distディレクトリにZIPファイルを作成
+          directory: dist
+
+      # リリースを作成し、生成されたZIPファイルをアップロードする
+      - name: Create Release and Upload Assets
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           RELEASE_TAG: ${{ github.event.pull_request.title }}
-        uses: release-drafter/release-drafter@v5
+        uses: softprops/action-gh-release@v2
         with:
-          tag: ${{ env.RELEASE_TAG }}
+          # dist内のZIPファイルを指定
+          files: dist/extensions.zip
+          tag_name: ${{ env.RELEASE_TAG }}
           name: Release ${{ env.RELEASE_TAG }}
-          version: ${{ env.RELEASE_TAG }}
-          publish: true
+          draft: false
+          prerelease: false
