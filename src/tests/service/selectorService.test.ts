@@ -70,6 +70,8 @@ describe('SelectorServiceのテスト', () => {
     // arrange
     const notRelistElement = testLoadElement(1);
     const relistElement = testLoadElement(2);
+    // 発送されましたの商品
+    const notRelistElement2 = testLoadElement(5);
 
     // act
     const notRelistResult = selectorService.isRelistItem(
@@ -84,10 +86,17 @@ describe('SelectorServiceのテスト', () => {
         Constants.SELECTOR_CONSTANTS.TODOS_CONSTANTS.NAME,
       ),
     );
+    const notRelistElement2Result = selectorService.isRelistItem(
+      selectorService.getTextContent(
+        notRelistElement2,
+        Constants.SELECTOR_CONSTANTS.TODOS_CONSTANTS.NAME,
+      ),
+    );
 
     // assert
     expect(notRelistResult).toBe(false);
     expect(relistResult).toBe(true);
+    expect(notRelistElement2Result).toBe(false);
   });
 
   test('getHref tests 商品のhref属性を取得できる', () => {
