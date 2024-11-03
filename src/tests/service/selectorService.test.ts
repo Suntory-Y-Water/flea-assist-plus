@@ -52,6 +52,19 @@ describe('SelectorServiceのテスト', () => {
     expect(result).toBe(`魔弾マッド・ゲンド・チェスターマッドゲンドチェスター2枚`);
   });
 
+  test('getItemName tests ユーザー名や商品名に"「"や"」"が入っている商品の商品名を取得できる', () => {
+    // arrange
+    const element = testLoadElement(4);
+
+    // act
+    const result = selectorService.getItemName(
+      selectorService.getTextContent(element, Constants.SELECTOR_CONSTANTS.TODOS_CONSTANTS.NAME),
+    );
+
+    // assert
+    expect(result).toBe(`天体妖精エスメルお茶はいかがですか？3枚デュエキングMAX`);
+  });
+
   test('getItemName tests 商品名を取得できずエラーをスローする', () => {
     // arrange
     // 「」内の商品名が取得できないようにする
@@ -146,5 +159,29 @@ describe('SelectorServiceのテスト', () => {
     );
 
     expect(defaultResult).toBe('./box.png');
+  });
+
+  test('getRelistItemName tests 再出品商品の商品名を取得できる', () => {
+    const result = selectorService.getRelistItemName(
+      '天体妖精エスメル 「お茶はいかがですか？」 3枚 デュエキングMAX',
+    );
+    expect(result).toBe('天体妖精エスメルお茶はいかがですか？3枚デュエキングMAX');
+  });
+
+  test('getRelistItemName & getItemName tests やることリストと出品中の商品ページで、商品名が一致する', () => {
+    // arrange
+    const element = testLoadElement(4);
+    const element1 = selectorService.getRelistItemName(
+      '天体妖精エスメル 「お茶はいかがですか？」 3枚 デュエキングMAX',
+    );
+
+    // act
+    const result = selectorService.getItemName(
+      selectorService.getTextContent(element, Constants.SELECTOR_CONSTANTS.TODOS_CONSTANTS.NAME),
+    );
+    const result1 = selectorService.getRelistItemName(element1);
+
+    // assert
+    expect(result).toBe(result1);
   });
 });

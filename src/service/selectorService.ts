@@ -60,23 +60,26 @@ export class SelectorService implements ISelectorService {
   }
 
   getItemName(name: string): string {
-    // 商品名を抽出する正規表現
-    const regex = /「([^」]+)」/;
+    // 全ての「」を削除する
+    const removedBrackets = name
+      .replace(/\s+/g, ' ') // 連続する空白文字（改行含む）を1つのスペースに置換
+      .trim() // 前後の空白を削除
+      .replace(/「|」/g, '');
 
-    // 正規表現でマッチした内容を取得
-    const match = name.match(regex);
+    // "さんが"と"を購入しました。"の間の文字列を抽出する正規表現
+    const regex = /さんが(.+?)を購入しました。/;
+    const match = removedBrackets.match(regex);
 
-    // マッチした場合は商品名を返し、それ以外は null を返す
-    if (match) {
-      // マッチした商品の名前を返す
-      return match[1].trim().replace(/\s+/g, '');
+    if (!match) {
+      throw new Error('商品名が取得できませんでした');
     }
 
-    throw new Error('商品名が取得できませんでした');
+    // 抽出した文字列の前後の空白を削除し、連続する空白を1つに置換
+    return match[1].trim().replace(/\s+/g, '');
   }
 
   getRelistItemName(name: string): string {
-    return name.trim().replace(/\s+/g, '');
+    return name.trim().replace(/\s+/g, '').replace(/「|」/g, '');
   }
 
   isRelistItem(message: string): boolean {
