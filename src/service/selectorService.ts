@@ -66,12 +66,12 @@ export class SelectorService implements ISelectorService {
       .trim() // 前後の空白を削除
       .replace(/「|」/g, '');
 
-    // "さんが"と"を購入しました。"の間の文字列を抽出する正規表現
-    const regex = /さんが(.+?)を購入しました。/;
+    // "さんが"と"を購入しました。"または"さんが"と"の支払いを完了"の間の文字列を抽出する正規表現
+    const regex = /さんが(.+?)(?:を購入しました。|の支払いを完了)/;
     const match = removedBrackets.match(regex);
 
     if (!match) {
-      throw new Error('商品名が取得できませんでした');
+      throw new Error(`商品名が取得できませんでした 商品名称: ${removedBrackets}`);
     }
 
     // 抽出した文字列の前後の空白を削除し、連続する空白を1つに置換
