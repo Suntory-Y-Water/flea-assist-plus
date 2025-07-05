@@ -1,4 +1,3 @@
-/// <reference types="vitest" />
 import { defineConfig } from 'vite';
 import { crx, defineManifest } from '@crxjs/vite-plugin';
 import tsconfigPaths from 'vite-tsconfig-paths';
@@ -7,7 +6,8 @@ const manifest = defineManifest({
   manifest_version: 3,
   name: 'らくらくチェッカー',
   version: '1.0.0',
-  description: 'フリマアプリで再出品していない商品を見つけることができる拡張機能',
+  description:
+    'フリマアプリで再出品していない商品を見つけることができる拡張機能',
   permissions: ['tabs', 'activeTab', 'scripting', 'storage'],
   host_permissions: ['https://jp.mercari.com/*'],
   background: {
@@ -15,7 +15,11 @@ const manifest = defineManifest({
   },
   content_scripts: [
     {
-      matches: ['https://jp.mercari.com/todos', 'https://jp.mercari.com/mypage/listings'],
+      matches: [
+        'https://jp.mercari.com/todos',
+        'https://jp.mercari.com/mypage/listings',
+        'http://localhost:5173/*',
+      ],
       js: ['src/content.ts'],
     },
   ],
@@ -47,10 +51,5 @@ export default defineConfig({
   build: {
     outDir: 'dist',
     emptyOutDir: true,
-  },
-  test: {
-    globals: true,
-    environment: 'happy-dom',
-    setupFiles: ['./vitest-setup.ts'],
   },
 });
